@@ -46,7 +46,7 @@ public class UserController {
     public ResponseEntity<User> updateUser(@PathVariable Long id, @RequestBody User user) {
         User existingUser = userService.getUserById(id);
         if (existingUser != null) {
-            user.setId(id); // Устанавливаем ID для обновляемого пользователя
+            user.setId(id);
             User updatedUser = userService.saveUser(user);
             return new ResponseEntity<>(updatedUser, HttpStatus.OK);
         } else {
@@ -76,12 +76,12 @@ public class UserController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<User> loginUser(String email, String password) {
+    public ResponseEntity<User> loginUser(@RequestParam String email, @RequestParam String password) {
         User foundUser = userService.getUserByEmailAndPassword(email, password);
         if (foundUser != null) {
-            return ResponseEntity.ok(foundUser); // Возвращаем объект пользователя
+            return ResponseEntity.ok(foundUser);
         } else {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build(); // Возвращаем ошибку 401
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
         }
     }
 }

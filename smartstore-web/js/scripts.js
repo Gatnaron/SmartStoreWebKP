@@ -15,14 +15,3 @@ function showSlides(n) {
     }
     slides[slideIndex-1].style.display = "block";
 }
-
-// Проверка наличия userId в localStorage при загрузке страницы
-document.addEventListener("DOMContentLoaded", function() {
-    const userId = localStorage.getItem("userId");
-    if (!userId) {
-        const userIcon = document.getElementById("user-icon");
-        userIcon.addEventListener("click", function() {
-            alert("Пожалуйста, войдите в систему.");
-        });
-    }
-});
