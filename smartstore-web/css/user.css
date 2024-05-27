@@ -1,0 +1,70 @@
+.user-info {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #f4f4f4;
+    border-radius: 10px;
+}
+
+.user-info h1, .user-info h2 {
+    text-align: center;
+}
+
+.user-info p {
+    margin-bottom: 10px;
+}
+
+.user-info label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+.user-info input[type="password"],
+.user-info input[type="text"] {
+    width: calc(100% - 22px); 
+    padding: 10px;
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.user-info button {
+    width: 100%;
+    padding: 10px;
+    background-color: #9b4da6;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.user-info button:hover {
+    background-color: #7b387e;
+}
+
+#edit-mode {
+    display: none;
+}
+
+#orders {
+    margin-top: 20px;
+}
+
+.order-card {
+    background-color: white;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 15px;
+    margin-bottom: 10px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.order-card h3 {
+    margin: 0 0 10px;
+}
+
+.order-card p {
+    margin: 5px 0;
+}

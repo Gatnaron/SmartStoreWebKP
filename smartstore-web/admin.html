@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Администратор - SmartStore</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/admin.css">
+</head>
+<body>
+    <header>
+        <a href="admin.html" class="logo">Админ Панель-SmartStore</a>
+        <nav>
+            <a href="catalog.html">Каталог</a>
+    </header>
+    <main>
+        <h1>Админ Панель</h1>
+        
+        <section class="admin-section">
+            <h2>Добавить новый товар</h2>
+            <form id="add-product-form">
+                <label for="product-img">Изображение товара:</label>
+                <input type="text" id="product-img" name="img" required>
+
+                <label for="product-name">Название товара:</label>
+                <input type="text" id="product-name" name="name" required>
+
+                <label for="product-price">Цена:</label>
+                <input type="number" id="product-price" name="price" step="0.01" required>
+
+                <label for="product-brand">Бренд:</label>
+                <select id="product-brand" name="brand" required>
+                    <!-- Опции будут загружаться динамически -->
+                </select>
+
+                <label for="product-type">Тип:</label>
+                <select id="product-type" name="type" required>
+                    <!-- Опции будут загружаться динамически -->
+                </select>
+
+                <label for="product-info-title">Заголовок доп. информации:</label>
+                <input type="text" id="product-info-title" name="info-title" required>
+
+                <label for="product-info-description">Описание доп. информации:</label>
+                <textarea id="product-info-description" name="info-description" required></textarea>
+
+                <button type="submit">Добавить товар</button>
+            </form>
+        </section>
+
+        <section class="admin-section">
+            <h2>Добавить новый бренд</h2>
+            <form id="add-brand-form">
+                <label for="brand-name">Название бренда:</label>
+                <input type="text" id="brand-name" name="name" required>
+                <button type="submit">Добавить бренд</button>
+            </form>
+        </section>
+
+        <section class="admin-section">
+            <h2>Добавить новый тип</h2>
+            <form id="add-type-form">
+                <label for="type-name">Название типа:</label>
+                <input type="text" id="type-name" name="name" required>
+                <button type="submit">Добавить тип</button>
+            </form>
+        </section>
+
+        <section class="admin-section">
+            <h2>Существующие товары</h2>
+            <table id="products-table">
+                <thead>
+                    <tr>
+                        <th>Изображение</th>
+                        <th>Название</th>
+                        <th>Цена</th>
+                        <th>Бренд</th>
+                        <th>Тип</th>
+                        <th>Доп. информация</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Данные будут загружаться динамически -->
+                </tbody>
+            </table>
+        </section>
+
+        <section class="admin-section">
+            <h2>Существующие бренды</h2>
+            <table id="brands-table">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Название</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Данные будут загружаться динамически -->
+                </tbody>
+            </table>
+        </section>
+
+        <section class="admin-section">
+            <h2>Существующие типы</h2>
+            <table id="types-table">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Название</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Данные будут загружаться динамически -->
+                </tbody>
+            </table>
+        </section>
+    </main>
+
+    <script src="js/admin.js"></script>
+</body>
+</html>

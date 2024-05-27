@@ -1,0 +1,166 @@
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+}
+
+header {
+    background-color: #9b4da6;
+    color: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000; /* Убедитесь, что заголовок будет поверх других элементов */
+}
+
+header .logo {
+    font-size: 24px;
+    font-weight: bold;
+    text-decoration: none;
+    color: white;
+}
+
+header nav a {
+    margin-left: 20px;
+    text-decoration: none;
+}
+
+header nav img {
+    width: 32px;
+    height: 32px;
+}
+
+main {
+    display: flex;
+    margin-top: 60px; /* Отступ для компенсации фиксированного заголовка */
+}
+
+aside {
+    width: 250px;
+    padding: 20px;
+    background-color: #f7f7f7;
+    border-right: 1px solid #ddd;
+    position: fixed; /* Фиксированное позиционирование */
+    top: 60px; /* Отступ для компенсации фиксированного заголовка */
+    left: 0;
+    height: calc(100% - 60px); /* Высота на всю страницу, минус высота заголовка */
+    overflow-y: auto; /* Скролл, если содержимого больше высоты */
+}
+
+aside h2 {
+    font-size: 20px;
+    margin-bottom: 20px;
+}
+
+aside form {
+    display: flex;
+    flex-direction: column;
+}
+
+aside label {
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+aside input {
+    margin-bottom: 15px;
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+.price-range {
+    margin-bottom: 15px;
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+}
+
+.price-range input {
+    width: calc(50% - 5px);
+    margin-bottom: 0;
+}
+
+aside button {
+    background-color: #9b4da6;
+    color: white;
+    border: none;
+    padding: 10px 0;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+aside button:hover {
+    background-color: #7a3a85;
+}
+
+section {
+    margin-left: 270px;
+    padding: 20px;
+    flex-grow: 1;
+}
+
+h1 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.product-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+}
+
+.product-card {
+    width: 300px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    padding: 15px;
+    box-sizing: border-box;
+    background: white;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+.product-card img {
+    width: 100%;
+    height: auto; 
+    max-height: 200px; 
+    object-fit: contain;
+    border-radius: 10px;
+}
+
+.product-card h2 {
+    font-size: 18px;
+    margin: 10px 0;
+}
+
+.product-card p {
+    color: #555;
+}
+
+.product-card .price {
+    font-size: 20px;
+    color: #e25488;
+    margin: 10px 0;
+}
+
+.product-card button {
+    background-color: #9b4da6;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.product-card button:hover {
+    background-color: #7a3a85;
+}

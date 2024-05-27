@@ -1,0 +1,137 @@
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+}
+
+header {
+    background-color: #9b4da6;
+    color: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000; /* Убедитесь, что заголовок будет поверх других элементов */
+}
+
+header .logo {
+    font-size: 24px;
+    font-weight: bold;
+    text-decoration: none;
+    color: white;
+}
+
+header nav a {
+    margin-left: 20px;
+    text-decoration: none;
+}
+
+header nav img {
+    width: 32px;
+    height: 32px;
+}
+
+main {
+    padding: 80px 20px 20px 20px; /* Отступ для компенсации фиксированного заголовка */
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+h1 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.cart-container {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.cart-item {
+    display: flex;
+    gap: 20px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    padding: 15px;
+    background: white;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.cart-item img {
+    width: 100px;
+    max-height: 200px; 
+    height: auto; 
+    object-fit: contain; 
+    border-radius: 10px;
+}
+
+.item-details {
+    flex-grow: 1;
+}
+
+.item-details h2 {
+    font-size: 18px;
+    margin: 0 0 10px 0;
+}
+
+.item-details p {
+    color: #555;
+}
+
+.item-details .price {
+    font-size: 20px;
+    color: #e25488;
+    margin: 10px 0;
+}
+
+.item-details label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+.item-details input {
+    width: 60px;
+    padding: 5px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    margin-bottom: 10px;
+}
+
+.item-details .remove {
+    background-color: #ff6666;
+    color: white;
+    border: none;
+    padding: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.item-details .remove:hover {
+    background-color: #cc0000;
+}
+
+.total {
+    text-align: right;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.total .checkout {
+    background-color: #9b4da6;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.total .checkout:hover {
+    background-color: #7a3a85;
+}
