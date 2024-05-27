@@ -20,7 +20,12 @@ document.addEventListener('DOMContentLoaded', function () {
     productGrid.addEventListener('click', function (event) {
         if (event.target.tagName === 'BUTTON') {
             const deviceId = event.target.getAttribute('data-device-id');
-            const userId = 1; // Assume the user ID is 1 for now
+            const userId = localStorage.getItem("userId");
+
+            if (!userId) {
+                alert("Пожалуйста, войдите в систему, чтобы добавить товар в корзину.");
+                return;
+            }
 
             fetch(`http://localhost:8080/baskets/${userId}/add`, {
                 method: 'POST',
@@ -29,12 +34,16 @@ document.addEventListener('DOMContentLoaded', function () {
                 },
                 body: JSON.stringify({ deviceId })
             })
-                .then(response => response.json())
-                .then(data => {
-                    alert('Товар добавлен в корзину');
+                .then(response => {
+                    if (response.ok) {
+                        alert('Товар добавлен в корзину');
+                    } else {
+                        throw new Error("Ошибка при добавлении товара в корзину");
+                    }
                 })
                 .catch(error => {
                     console.error('Ошибка при добавлении товара в корзину:', error);
+                    alert('Не удалось добавить товар в корзину. Пожалуйста, попробуйте снова.');
                 });
         }
     });

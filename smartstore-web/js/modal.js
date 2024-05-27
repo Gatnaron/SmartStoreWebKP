@@ -3,28 +3,51 @@ document.addEventListener("DOMContentLoaded", function() {
     const registerForm = document.getElementById("register-form");
     const userIcon = document.getElementById("user-icon");
     const modal = document.getElementById("modal");
-    const closeModalButton = document.getElementById("close-modal");
+    const closeModalButtons = document.querySelectorAll("[id^=close-modal]"); // Ищем все элементы с ID, начинающимся с "close-modal"
+    const switchToAuthLink = document.getElementById("switch-to-auth");
+    const switchToRegisterLink = document.getElementById("switch-to-register");
+    const authContainer = document.getElementById("auth-container");
+    const registerContainer = document.getElementById("register-container");
 
+    // Открытие модального окна при клике на иконку пользователя
     if (userIcon) {
         userIcon.addEventListener("click", function(event) {
             event.preventDefault();
             const userId = localStorage.getItem("userId");
             if (userId) {
-                console.log("User already logged in, redirecting to profile.");
                 window.location.href = "user.html";
             } else {
-                console.log("User not logged in, showing modal.");
                 modal.style.display = "block"; // Показываем модальное окно при клике на иконку пользователя
             }
         });
     }
 
-    if (closeModalButton) {
-        closeModalButton.addEventListener("click", function(event) {
+    // Закрытие модального окна
+    closeModalButtons.forEach(button => {
+        button.addEventListener("click", function(event) {
             modal.style.display = "none"; // Закрываем модальное окно при клике на кнопку закрытия
+        });
+    });
+
+    // Переключение на форму регистрации
+    if (switchToRegisterLink) {
+        switchToRegisterLink.addEventListener("click", function(event) {
+            event.preventDefault();
+            authContainer.style.display = "none";
+            registerContainer.style.display = "block";
         });
     }
 
+    // Переключение на форму авторизации
+    if (switchToAuthLink) {
+        switchToAuthLink.addEventListener("click", function(event) {
+            event.preventDefault();
+            registerContainer.style.display = "none";
+            authContainer.style.display = "block";
+        });
+    }
+
+    // Обработка формы авторизации
     if (authForm) {
         authForm.addEventListener("submit", function(event) {
             event.preventDefault();
@@ -34,6 +57,7 @@ document.addEventListener("DOMContentLoaded", function() {
         });
     }
 
+    // Обработка формы регистрации
     if (registerForm) {
         registerForm.addEventListener("submit", function(event) {
             event.preventDefault();
@@ -50,28 +74,28 @@ function loginUser(email, password) {
         method: "POST",
         headers: {
             "Content-Type": "application/json"
-        }
+        },
     })
     .then(response => {
+        console.log("Response status:", response.status);
         if (response.ok) {
             return response.json();
         } else {
-            throw new Error("Login failed");
+            return response.text().then(text => { throw new Error(text) });
         }
     })
     .then(user => {
         console.log("Login successful, user ID:", user.id);
-        localStorage.setItem("userId", user.id);
-        window.location.href = "user.html";
+        localStorage.setItem("userId", user.id); // Сохраняем id пользователя в локальное хранилище
+        window.location.href = "user.html"; // Перенаправляем пользователя на страницу профиля
     })
     .catch(error => {
         console.error("Login failed:", error);
-        alert("Login failed. Please check your credentials and try again.");
+        alert("Login failed: " + error.message);  // Отображаем точное сообщение об ошибке
     });
 }
 
 function registerUser(email, password, address) {
-    console.log("Attempting to register with email:", email);
     fetch("http://localhost:8080/users/register", {
         method: "POST",
         headers: {
@@ -87,7 +111,6 @@ function registerUser(email, password, address) {
         }
     })
     .then(message => {
-        console.log("Registration successful:", message);
         alert(message);
         modal.style.display = "none"; // Закрываем модальное окно после успешной регистрации
     })
