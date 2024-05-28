@@ -10,9 +10,7 @@
     <header>
         <a href="index.html" class="logo">SmartStore</a>
         <nav>
-            <a href="#"><img src="img/catalog.png" alt="Каталог"></a>
-            <a href="basket.html"><img src="img/basket.png" alt="Корзина"></a>
-            <a href="#" id="user-icon"><img src="img/user.png" alt="Пользователь"></a>
+            <a href="#" id="cart-button"><img src="img/basket.png" alt="Корзина"></a>
         </nav>
     </header>
     <main>
@@ -21,29 +19,34 @@
             <form>
                 <label for="sort-name">Название:</label>
                 <input type="text" id="sort-name" name="name">
-
                 <label for="sort-type">Тип:</label>
                 <input type="text" id="sort-type" name="type">
-
                 <label for="sort-brand">Бренд:</label>
                 <input type="text" id="sort-brand" name="brand">
-
                 <label>Цена:</label>
                 <div class="price-range">
                     <input type="number" id="sort-price-min" name="price-min" step="any" placeholder="от">
                     <input type="number" id="sort-price-max" name="price-max" step="any" placeholder="до">
                 </div>
-
                 <button type="submit">Применить</button>
             </form>
         </aside>
         <section id="product-list">
             <h1>Каталог товаров</h1>
             <div class="product-grid">
-            <!-- Здесь будут отображаться товары -->
+                <!-- Здесь будут отображаться товары -->
             </div>
         </section>
     </main>
+    <div id="basket-modal" class="modal" style="display:none;">
+        <div class="modal-content">
+            <span id="close-basket-modal">&times;</span>
+            <div id="basket-container">
+                <h2>Корзина</h2>
+                <!-- Содержимое корзины будет отображаться здесь -->
+            </div>
+        </div>
+    </div>
     <script src="js/catalog.js"></script>
 </body>
 </html>

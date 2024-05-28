@@ -164,3 +164,41 @@ h1 {
 .product-card button:hover {
     background-color: #7a3a85;
 }
+
+.modal {
+    position: fixed; /* Фиксированное положение */
+    z-index: 1000; /* Высокий уровень z-index, чтобы быть поверх остального содержимого */
+    left: 0;
+    top: 0;
+    width: 250px; /* Ширина модального окна */
+    height: 100%; /* Высота модального окна */
+    overflow-x: hidden;
+    overflow-y: auto; /* Добавление скролла, если контент модального окна слишком большой */
+    background-color: rgba(0, 0, 0, 0.4); /* Полупрозрачный черный фон */
+    padding-top: 60px; /* Отступ сверху */
+    transition: 0.5s; /* Плавное появление */
+}
+
+/* Содержимое модального окна */
+.modal-content {
+    background-color: #fefefe;
+    margin: auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+}
+
+/* Кнопка закрытия модального окна */
+#close-basket-modal {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+#close-basket-modal:hover,
+#close-basket-modal:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
