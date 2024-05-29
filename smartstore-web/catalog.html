@@ -5,12 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Каталог товаров - SmartStore</title>
     <link rel="stylesheet" href="css/catalog.css">
+    <link rel="stylesheet" href="css/basket.css">
 </head>
 <body>
     <header>
         <a href="index.html" class="logo">SmartStore</a>
         <nav>
-            <a href="#" id="cart-button"><img src="img/basket.png" alt="Корзина"></a>
+            <a href="#" id="basket-icon"><img src="img/basket.png" alt="Корзина"></a>
         </nav>
     </header>
     <main>
@@ -39,14 +40,20 @@
         </section>
     </main>
     <div id="basket-modal" class="modal" style="display:none;">
-        <div class="modal-content">
+        <div class="basket-modal-content">
             <span id="close-basket-modal">&times;</span>
-            <div id="basket-container">
-                <h2>Корзина</h2>
-                <!-- Содержимое корзины будет отображаться здесь -->
+            <h2>Корзина</h2>
+            <div id="basket-items">
+                <!-- Здесь будут отображаться товары в корзине -->
             </div>
+            <div id="empty-basket-message" class="hidden">
+                <img src="img/no-basket-item.png" alt="Корзина пуста">
+                <p>Корзина пуста</p>
+            </div>
+            <button id="checkout-button">Купить</button>
         </div>
     </div>
+    <script src="js/modalBasket.js"></script>
     <script src="js/catalog.js"></script>
 </body>
 </html>

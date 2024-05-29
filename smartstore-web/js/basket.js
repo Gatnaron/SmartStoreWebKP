@@ -2,7 +2,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const basketItems = document.getElementById('basket-items');
     const userId = 1;
 
-    fetch(`/api/baskets/${userId}`)
+    fetch(`http://localhost:8080/baskets/${userId}`)
         .then(response => response.json())
         .then(data => {
             data.forEach(item => {

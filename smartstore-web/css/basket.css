@@ -1,137 +1,96 @@
-body {
-    margin: 0;
-    font-family: Arial, sans-serif;
+/* basket.css */
+.modal {
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0,0,0,0.4);
 }
 
-header {
-    background-color: #9b4da6;
-    color: white;
+.basket-modal-content {
+    background-color: #fefefe;
+    margin: 0;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 25%;
+    height: calc(100% - 60px); /* Минус высота хедера */
+    position: fixed;
+    right: 0;
+    top: 60px; /* Под хедером */
+    display: flex;
+    flex-direction: column;
+}
+
+#close-basket-modal {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+#close-basket-modal:hover,
+#close-basket-modal:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+#basket-items {
+    flex: 1;
+    margin-top: 20px;
+    overflow-y: auto;
+}
+
+#basket-items .basket-item {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 10px 20px;
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    z-index: 1000; /* Убедитесь, что заголовок будет поверх других элементов */
-}
-
-header .logo {
-    font-size: 24px;
-    font-weight: bold;
-    text-decoration: none;
-    color: white;
-}
-
-header nav a {
-    margin-left: 20px;
-    text-decoration: none;
-}
-
-header nav img {
-    width: 32px;
-    height: 32px;
-}
-
-main {
-    padding: 80px 20px 20px 20px; /* Отступ для компенсации фиксированного заголовка */
-    max-width: 800px;
-    margin: 0 auto;
-}
-
-h1 {
-    text-align: center;
-    margin-bottom: 20px;
-}
-
-.cart-container {
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-}
-
-.cart-item {
-    display: flex;
-    gap: 20px;
-    border: 1px solid #ddd;
-    border-radius: 10px;
-    padding: 15px;
-    background: white;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-}
-
-.cart-item img {
-    width: 100px;
-    max-height: 200px; 
-    height: auto; 
-    object-fit: contain; 
-    border-radius: 10px;
-}
-
-.item-details {
-    flex-grow: 1;
-}
-
-.item-details h2 {
-    font-size: 18px;
-    margin: 0 0 10px 0;
-}
-
-.item-details p {
-    color: #555;
-}
-
-.item-details .price {
-    font-size: 20px;
-    color: #e25488;
-    margin: 10px 0;
-}
-
-.item-details label {
-    display: block;
-    margin-bottom: 5px;
-    font-weight: bold;
-}
-
-.item-details input {
-    width: 60px;
-    padding: 5px;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    margin-bottom: 10px;
-}
-
-.item-details .remove {
-    background-color: #ff6666;
-    color: white;
-    border: none;
     padding: 10px;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 14px;
+    border-bottom: 1px solid #ccc;
 }
 
-.item-details .remove:hover {
-    background-color: #cc0000;
+#basket-items .basket-item img {
+    width: 50px;
+    height: 50px;
+    object-fit: cover;
 }
 
-.total {
-    text-align: right;
+#empty-basket-message {
+    text-align: center;
+    margin-top: 50px;
+}
+
+#empty-basket-message img {
+    width: 100px;
+    height: 100px;
+}
+
+#empty-basket-message p {
+    margin-top: 10px;
     font-size: 18px;
-    font-weight: bold;
+    color: #666;
 }
 
-.total .checkout {
-    background-color: #9b4da6;
+#checkout-button {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    background-color: #4CAF50;
     color: white;
     border: none;
-    padding: 10px 20px;
-    border-radius: 5px;
     cursor: pointer;
-    font-size: 16px;
+    font-size: 18px;
+    margin-top: auto;
+    margin-bottom: 20px; /* Поднимаем кнопку над нижней панелью */
 }
 
-.total .checkout:hover {
-    background-color: #7a3a85;
+#checkout-button:hover {
+    background-color: #45a049;
+}
+
+.hidden {
+    display: none;
 }

@@ -29,7 +29,8 @@ public class Basket {
     public void setUser(User user) {
         this.user = user;
     }
-
+    public Basket() {
+    }
     public Basket(Long id) {
         this.id = id;
     }

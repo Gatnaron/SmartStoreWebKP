@@ -27,9 +27,8 @@ public class BasketController {
         return basketDeviceService.getDevicesByBasketId(basket.getId());
     }
 
-    @PostMapping("/{userId}/add")
-    public ResponseEntity<Void> addToBasket(@PathVariable Long userId, @RequestBody Map<String, Long> request) {
-        Long deviceId = request.get("deviceId");
+    @PostMapping("/add")
+    public ResponseEntity<Void> addToBasket(@PathVariable Long userId, @RequestBody Long deviceId) {
         Basket basket = basketService.getBasketByUserId(userId);
         basketService.addItemToBasket(basket.getId(), deviceId);
         return ResponseEntity.ok().build();
