@@ -1,6 +1,7 @@
 package com.example.SmartStore.controller;
 
 import com.example.SmartStore.model.Device;
+import com.example.SmartStore.repository.DeviceRepository;
 import com.example.SmartStore.service.DeviceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -14,7 +15,15 @@ public class DeviceController {
     @Autowired
     private DeviceService deviceService;
 
+    @Autowired
+    private DeviceRepository deviceRepository;
+
     @GetMapping
+    public List<Device> getDevicesByIds(@RequestParam List<Long> ids) {
+        return deviceRepository.findAllById(ids);
+    }
+
+    @GetMapping("/all")
     public List<Device> getAllDevices() {
         return deviceService.getAllDevices();
     }

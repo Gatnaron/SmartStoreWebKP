@@ -1,7 +1,7 @@
 document.addEventListener('DOMContentLoaded', function () {
     const productGrid = document.querySelector('.product-grid');
 
-    fetch('http://localhost:8080/devices')
+    fetch('http://localhost:8080/devices/all')
         .then(response => response.json())
         .then(data => {
             data.forEach(device => {
@@ -20,29 +20,14 @@ document.addEventListener('DOMContentLoaded', function () {
     productGrid.addEventListener('click', function (event) {
         if (event.target.tagName === 'BUTTON') {
             const deviceId = event.target.getAttribute('data-device-id');
-            const userId = localStorage.getItem('userId');
-            if (userId) {
-                fetch(`http://localhost:8080/baskets/add?userId=${userId}&deviceId=${deviceId}`, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    }
-                })
-                .then(response => {
-                    if (!response.ok) {
-                        throw new Error('Failed to add item to basket');
-                    }
-                    return response.json();
-                })
-                .then(data => {
-                    alert('Товар добавлен в корзину');
-                })
-                .catch(error => {
-                    console.error('Ошибка при добавлении товара в корзину:', error);
-                });
-            } else {
-                alert('Пожалуйста, войдите в систему, чтобы добавить товар в корзину.');
-            }
+            addToBasket(deviceId);
         }
     });
 });
+
+function addToBasket(deviceId) {
+    const basket = JSON.parse(localStorage.getItem('basket')) || [];
+    basket.push(deviceId);
+    localStorage.setItem('basket', JSON.stringify(basket));
+    alert('Товар добавлен в корзину');
+}

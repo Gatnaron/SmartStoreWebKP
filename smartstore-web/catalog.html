@@ -39,18 +39,16 @@
             </div>
         </section>
     </main>
-    <div id="basket-modal" class="modal" style="display:none;">
-        <div class="basket-modal-content">
-            <span id="close-basket-modal">&times;</span>
-            <h2>Корзина</h2>
+    <div id="basket-modal" class="modal">
+        <div class="modal-content">
+            <span id="close-basket-modal" class="close-button">&times;</span>
             <div id="basket-items">
                 <!-- Здесь будут отображаться товары в корзине -->
             </div>
             <div id="empty-basket-message" class="hidden">
-                <img src="img/no-basket-item.png" alt="Корзина пуста">
-                <p>Корзина пуста</p>
+                Ваша корзина пуста.
             </div>
-            <button id="checkout-button">Купить</button>
+            <button id="checkout-button" class="hidden">Оплатить заказ</button>
         </div>
     </div>
     <script src="js/modalBasket.js"></script>

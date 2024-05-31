@@ -5,6 +5,7 @@ document.addEventListener("DOMContentLoaded", function() {
         window.location.href = "index.html";
     } else {
         loadUserProfile(userId);
+        loadUserOrders(userId);
     }
 
     const profileForm = document.getElementById("edit-mode");
@@ -55,6 +56,36 @@ function loadUserProfile(userId) {
     });
 }
 
+function loadUserOrders(userId) {
+    fetch(`http://localhost:8080/orders/${userId}`)
+    .then(response => response.json())
+    .then(orders => {
+        const ordersContainer = document.getElementById("orders");
+        ordersContainer.innerHTML = "";
+        if (orders.length === 0) {
+            ordersContainer.innerText = "У вас нет заказов.";
+        } else {
+            orders.forEach(order => {
+                const orderElement = document.createElement("div");
+                orderElement.classList.add("order");
+                orderElement.innerHTML = `
+                    <h3>Заказ #${order.id}</h3>
+                    <p>Дата: ${new Date(order.createdAt).toLocaleString()}</p>
+                    <p>Товары:</p>
+                    <ul>
+                        ${order.devices.map(device => `<li>${device.name} - ${device.price} руб.</li>`).join('')}
+                    </ul>
+                `;
+                ordersContainer.appendChild(orderElement);
+            });
+        }
+    })
+    .catch(error => {
+        console.error("Error loading orders:", error);
+        alert("Failed to load orders. Please try again.");
+    });
+}
+
 function updateUserProfile(userId, password, address) {
     fetch(`http://localhost:8080/users/${userId}`, {
         method: "PUT",
@@ -65,14 +96,14 @@ function updateUserProfile(userId, password, address) {
     })
     .then(response => {
         if (response.ok) {
-            alert("Profile updated successfully!");
-            window.location.reload(); // Перезагружаем страницу для обновления данных
+            alert("Profile updated successfully.");
+            window.location.reload();
         } else {
-            throw new Error("Profile update failed");
+            throw new Error("Failed to update profile");
         }
     })
     .catch(error => {
-        console.error("Profile update failed:", error);
+        console.error("Error updating profile:", error);
         alert("Failed to update profile. Please try again.");
     });
 }
