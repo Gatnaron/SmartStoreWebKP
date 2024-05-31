@@ -1,10 +1,9 @@
 package com.example.SmartStore.service;
 
-import com.example.SmartStore.model.Basket;
-import com.example.SmartStore.model.BasketDevice;
-import com.example.SmartStore.model.Device;
-import com.example.SmartStore.repository.BasketDeviceRepository;
+import com.example.SmartStore.model.*;
 import com.example.SmartStore.repository.BasketRepository;
+import com.example.SmartStore.repository.BasketItemRepository;
+import com.example.SmartStore.repository.DeviceRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,52 +16,40 @@ public class BasketService {
     private BasketRepository basketRepository;
 
     @Autowired
-    private BasketDeviceRepository basketDeviceRepository;
+    private BasketItemRepository basketItemRepository;
 
-    public void addItemToBasket(Long basketId, Long deviceId) {
-        BasketDevice basketDevice = new BasketDevice();
-        basketDevice.setBasket(new Basket(basketId));
-        basketDevice.setDevice(new Device(deviceId));
-        basketDeviceRepository.save(basketDevice);
-    }
+    @Autowired
+    private DeviceRepository deviceRepository;
 
-    public List<Basket> getAllBaskets() {
-        return basketRepository.findAll();
-    }
+    public void addToBasket(Long userId, Long deviceId) {
+        Basket basket = basketRepository.findByUserId(userId);
+        if (basket == null) {
+            basket = new Basket();
+            basket.setUser(new User(userId)); // Предполагается, что User с таким ID существует
+            basket = basketRepository.save(basket);
+        }
 
-    public Basket getBasketById(Long id) {
-        return basketRepository.findById(id).orElse(null);
+        Device device = deviceRepository.findById(deviceId).orElseThrow(() -> new RuntimeException("Device not found"));
+
+        BasketItem basketItem = basketItemRepository.findByBasketAndDevice(basket, device);
+        if (basketItem != null) {
+            basketItem.setQuantity(basketItem.getQuantity() + 1);
+        } else {
+            basketItem = new BasketItem();
+            basketItem.setBasket(basket);
+            basketItem.setDevice(device);
+            basketItem.setQuantity(1);
+        }
+
+        basketItemRepository.save(basketItem);
     }
 
     public Basket getBasketByUserId(Long userId) {
         return basketRepository.findByUserId(userId);
     }
 
-    public Basket saveBasket(Basket basket) {
-        return basketRepository.save(basket);
-    }
-
-    public void deleteBasket(Long id) {
-        basketRepository.deleteById(id);
-    }
-
-    public List<BasketDevice> getBasketDevices(Long basketId) {
-        return basketDeviceRepository.findByBasketId(basketId);
-    }
-
-    public BasketDevice addBasketDevice(BasketDevice basketDevice) {
-        return basketDeviceRepository.save(basketDevice);
-    }
-
-    public void removeBasketDevice(Long basketId, Long deviceId) {
-        BasketDevice basketDevice = basketDeviceRepository.findByBasketIdAndDeviceId(basketId, deviceId);
-        if (basketDevice != null) {
-            basketDeviceRepository.delete(basketDevice);
-        }
-    }
-
-    public void buyAllItems(Long basketId) {
-        List<BasketDevice> basketDevices = basketDeviceRepository.findByBasketId(basketId);
-        basketDeviceRepository.deleteAll(basketDevices);
+    public List<BasketDevice> getBasketDevicesByUserId(Long userId) {
+        Basket basket = getBasketByUserId(userId);
+        return basket.getBasketDevices();
     }
 }

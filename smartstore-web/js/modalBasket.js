@@ -3,27 +3,20 @@ document.addEventListener("DOMContentLoaded", function() {
     const basketModal = document.getElementById("basket-modal");
     const closeBasketModalButton = document.getElementById("close-basket-modal");
     const checkoutButton = document.getElementById("checkout-button");
-    const basketItemsContainer = document.getElementById("basket-items");
-    const emptyBasketMessage = document.getElementById("empty-basket-message");
-
-    if (!basketItemsContainer) {
-        console.error("Element with id 'basket-items' not found in the DOM.");
-        return;
-    }
 
     basketIcon.addEventListener("click", function(event) {
         event.preventDefault();
         const userId = localStorage.getItem("userId");
         if (userId) {
             loadBasketItems(userId);
-            basketModal.style.display = "block"; // Показываем модальное окно корзины
+            basketModal.style.display = "block";
         } else {
             alert("Пожалуйста, войдите в систему, чтобы посмотреть корзину.");
         }
     });
 
     closeBasketModalButton.addEventListener("click", function(event) {
-        basketModal.style.display = "none"; // Закрываем модальное окно корзины при клике на кнопку закрытия
+        basketModal.style.display = "none";
     });
 
     checkoutButton.addEventListener("click", function(event) {
@@ -38,16 +31,11 @@ document.addEventListener("DOMContentLoaded", function() {
 });
 
 function loadBasketItems(userId) {
-    const basketItemsContainer = document.getElementById("basket-items"); // Ensure this element is fetched again
-    const emptyBasketMessage = document.getElementById("empty-basket-message"); // Ensure this element is fetched again
-    const checkoutButton = document.getElementById("checkout-button"); // Ensure this element is fetched again
+    const basketItemsContainer = document.getElementById("basket-items");
+    const emptyBasketMessage = document.getElementById("empty-basket-message");
 
-    if (!basketItemsContainer) {
-        console.error("Element with id 'basket-items' not found in the DOM.");
-        return;
-    }
-    if (!emptyBasketMessage) {
-        console.error("Element with id 'empty-basket-message' not found in the DOM.");
+    if (!basketItemsContainer || !emptyBasketMessage) {
+        console.error("Element with id 'basket-items' or 'empty-basket-message' not found in the DOM.");
         return;
     }
 
@@ -57,10 +45,8 @@ function loadBasketItems(userId) {
             basketItemsContainer.innerHTML = "";
             if (items.length === 0) {
                 emptyBasketMessage.classList.remove("hidden");
-                checkoutButton.classList.add("hidden");
             } else {
                 emptyBasketMessage.classList.add("hidden");
-                checkoutButton.classList.remove("hidden");
                 items.forEach(item => {
                     const itemElement = document.createElement("div");
                     itemElement.classList.add("basket-item");
@@ -91,10 +77,9 @@ function createOrder(userId) {
     .then(response => {
         if (response.ok) {
             alert("Заказ успешно создан!");
-            // Очистить корзину после успешного заказа
             localStorage.removeItem("basket");
             loadBasketItems(userId);
-            basketModal.style.display = "none"; // Закрываем модальное окно корзины
+            basketModal.style.display = "none";
         } else {
             throw new Error("Ошибка при создании заказа");
         }

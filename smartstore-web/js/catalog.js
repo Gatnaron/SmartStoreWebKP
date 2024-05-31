@@ -11,7 +11,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     <img src="${device.img}" alt="${device.name}">
                     <h3>${device.name}</h3>
                     <p>Цена: ${device.price} руб.</p>
-                    <button data-device-id="${device.id}">Добавить в корзину</button>
+                    <button data-user-id="1" data-device-id="${device.id}">Добавить в корзину</button>
                 `;
                 productGrid.appendChild(productCard);
             });
@@ -19,15 +19,26 @@ document.addEventListener('DOMContentLoaded', function () {
 
     productGrid.addEventListener('click', function (event) {
         if (event.target.tagName === 'BUTTON') {
+            const userId = event.target.getAttribute('data-user-id');
             const deviceId = event.target.getAttribute('data-device-id');
-            addToBasket(deviceId);
+            addToBasket(userId, deviceId);
         }
     });
 });
 
-function addToBasket(deviceId) {
-    const basket = JSON.parse(localStorage.getItem('basket')) || [];
-    basket.push(deviceId);
-    localStorage.setItem('basket', JSON.stringify(basket));
-    alert('Товар добавлен в корзину');
+function addToBasket(userId, deviceId) {
+    fetch(`http://localhost:8080/baskets/add/${userId}/${deviceId}`, {
+        method: 'POST'
+    })
+    .then(response => {
+        if (response.ok) {
+            alert('Товар успешно добавлен в корзину');
+        } else {
+            throw new Error('Failed to add to basket');
+        }
+    })
+    .catch(error => {
+        console.error('Ошибка при добавлении товара в корзину:', error);
+        alert('Ошибка при добавлении товара в корзину: ' + error.message);
+    });
 }
