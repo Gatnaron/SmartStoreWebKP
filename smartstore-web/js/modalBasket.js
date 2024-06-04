@@ -11,8 +11,19 @@ document.addEventListener("DOMContentLoaded", function() {
             alert('Пожалуйста, войдите в систему, чтобы посмотреть корзину.');
             return;
         }
-        loadBasketItems(userId);
-        basketModal.style.display = "block"; // Показываем модальное окно корзины
+        fetchBasketId(userId)
+            .then(basketId => {
+                if (basketId) {
+                    loadBasketItems(basketId);
+                    basketModal.style.display = "block"; // Показываем модальное окно корзины
+                } else {
+                    alert('Корзина не найдена.');
+                }
+            })
+            .catch(error => {
+                console.error('Ошибка при получении корзины:', error);
+                alert('Ошибка при получении корзины: ' + error.message);
+            });
     });
 
     closeBasketModalButton.addEventListener("click", function(event) {
@@ -30,12 +41,27 @@ document.addEventListener("DOMContentLoaded", function() {
     });
 });
 
-function loadBasketItems(userId) {
+function fetchBasketId(userId) {
+    return fetch(`http://localhost:8080/baskets/user/${userId}`)
+        .then(response => {
+            if (!response.ok) {
+                throw new Error("Ошибка при получении идентификатора корзины");
+            }
+            return response.json();
+        })
+        .then(data => data.id)
+        .catch(error => {
+            console.error("Ошибка при получении идентификатора корзины:", error);
+            throw error;
+        });
+}
+
+function loadBasketItems(basketId) {
     const basketItemsContainer = document.getElementById("basket-items");
     const emptyBasketMessage = document.getElementById("empty-basket-message");
     const checkoutButton = document.getElementById("checkout-button");
 
-    fetch(`http://localhost:8080/baskets/${userId}`)
+    fetch(`http://localhost:8080/baskets/${basketId}/items`)
         .then(response => {
             if (!response.ok) {
                 throw new Error("Ошибка при загрузке товаров в корзине");
@@ -51,15 +77,19 @@ function loadBasketItems(userId) {
                 emptyBasketMessage.classList.add("hidden");
                 checkoutButton.classList.remove("hidden");
                 items.forEach(item => {
-                    const itemElement = document.createElement("div");
-                    itemElement.classList.add("basket-item");
-                    itemElement.innerHTML = `
-                        <img src="${item.device.img}" alt="${item.device.name}">
-                        <span>${item.device.name}</span>
-                        <span>${item.device.price} руб.</span>
-                        <span>Количество: ${item.quantity}</span>
-                    `;
-                    basketItemsContainer.appendChild(itemElement);
+                    if (item.device && item.device.img && item.device.name && item.device.price) {
+                        const itemElement = document.createElement("div");
+                        itemElement.classList.add("basket-item");
+                        itemElement.innerHTML = `
+                            <img src="${item.device.img}" alt="${item.device.name}">
+                            <span>${item.device.name}</span>
+                            <span>${item.device.price} руб.</span>
+                            <span>Количество: ${item.quantity}</span>
+                        `;
+                        basketItemsContainer.appendChild(itemElement);
+                    } else {
+                        console.warn("Некорректный элемент корзины:", item);
+                    }
                 });
             }
         })

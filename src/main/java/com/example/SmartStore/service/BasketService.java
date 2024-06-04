@@ -48,16 +48,17 @@ public class BasketService {
         return basketRepository.findByUserId(userId);
     }
 
-    public List<BasketItem> getBasketItemsByUserId(Long userId) {
-        Basket basket = getBasketByUserId(userId);
-        if (basket != null) {
-            return basketItemRepository.findByBasket(basket);
-        }
-        return null;
+    public Basket getBasketById(Long basketId) {
+        return basketRepository.findById(basketId).orElseThrow(() -> new RuntimeException("Basket not found"));
     }
 
     public void removeFromBasket(Long itemId) {
         basketItemRepository.deleteById(itemId);
+    }
+
+    public List<BasketDevice> getBasketDevicesByUserId(Long userId) {
+        Basket basket = getBasketByUserId(userId);
+        return basket.getBasketDevices();
     }
 
     public void buyAll(Long userId) {

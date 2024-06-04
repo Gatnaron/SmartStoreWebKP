@@ -41,8 +41,11 @@
     </main>
     <div id="basket-modal" class="modal">
         <div class="modal-content">
-            <span class="close" onclick="closeBasket()">&times;</span>
-            <div id="basket-container"></div>
+            <span id="close-basket-modal" class="close">&times;</span>
+            <h2>Ваша корзина</h2>
+            <div id="basket-items"></div>
+            <p id="empty-basket-message" class="hidden">Ваша корзина пуста.</p>
+            <button id="checkout-button" class="hidden">Оформить заказ</button>
         </div>
     </div>
     <script src="js/modalBasket.js"></script>
