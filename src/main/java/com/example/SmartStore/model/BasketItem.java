@@ -1,5 +1,6 @@
 package com.example.SmartStore.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 @Entity
@@ -12,10 +13,12 @@ public class BasketItem {
 
     @ManyToOne
     @JoinColumn(name = "basket_id")
+    @JsonIgnore
     private Basket basket;
 
     @ManyToOne
     @JoinColumn(name = "device_id")
+    @JsonIgnore
     private Device device;
 
     // Дополнительные поля, например, количество товаров

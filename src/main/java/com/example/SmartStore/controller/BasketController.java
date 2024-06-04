@@ -5,6 +5,7 @@ import com.example.SmartStore.model.BasketDevice;
 import com.example.SmartStore.model.BasketItem;
 import com.example.SmartStore.service.BasketService;
 import com.example.SmartStore.repository.BasketItemRepository;
+import com.example.SmartStore.repository.DeviceRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -22,9 +23,16 @@ public class BasketController {
     @Autowired
     private BasketItemRepository basketItemRepository;
 
+    @Autowired
+    private DeviceRepository deviceRepository;
+
     @GetMapping("/{userId}")
-    public List<BasketDevice> getUserBasket(@PathVariable Long userId) {
-        return basketService.getBasketDevicesByUserId(userId);
+    public ResponseEntity<List<BasketItem>> getUserBasket(@PathVariable Long userId) {
+        List<BasketItem> basketItems = basketService.getBasketItemsByUserId(userId);
+        if (basketItems == null) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
+        return ResponseEntity.ok(basketItems);
     }
 
     @PostMapping("/add/{userId}/{deviceId}")
@@ -40,7 +48,7 @@ public class BasketController {
     @DeleteMapping("/remove/{itemId}")
     public ResponseEntity<Void> removeFromBasket(@PathVariable Long itemId) {
         try {
-            basketItemRepository.deleteById(itemId);
+            basketService.removeFromBasket(itemId);
             return ResponseEntity.ok().build();
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
@@ -50,14 +58,7 @@ public class BasketController {
     @PostMapping("/{userId}/buyAll")
     public ResponseEntity<Void> buyAll(@PathVariable Long userId) {
         try {
-            Basket basket = basketService.getBasketByUserId(userId);
-            if (basket == null) {
-                return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
-            }
-            List<BasketItem> items = basket.getItems();
-            for (BasketItem item : items) {
-                basketItemRepository.delete(item);
-            }
+            basketService.buyAll(userId);
             return ResponseEntity.ok().build();
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();

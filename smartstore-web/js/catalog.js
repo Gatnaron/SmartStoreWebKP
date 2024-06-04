@@ -17,13 +17,17 @@ document.addEventListener('DOMContentLoaded', function () {
             });
         });
 
-    productGrid.addEventListener('click', function (event) {
-        if (event.target.tagName === 'BUTTON') {
-            const userId = event.target.getAttribute('data-user-id');
-            const deviceId = event.target.getAttribute('data-device-id');
-            addToBasket(userId, deviceId);
-        }
-    });
+        productGrid.addEventListener('click', function (event) {
+            if (event.target.tagName === 'BUTTON') {
+                const userId = localStorage.getItem("userId");
+                if (!userId) {
+                    alert('Пожалуйста, войдите в систему, чтобы добавить товар в корзину.');
+                    return;
+                }
+                const deviceId = event.target.getAttribute('data-device-id');
+                addToBasket(userId, deviceId);
+            }
+        });
 });
 
 function addToBasket(userId, deviceId) {
