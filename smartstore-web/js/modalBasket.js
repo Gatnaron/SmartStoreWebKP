@@ -100,18 +100,14 @@ function loadBasketItems(basketId) {
 }
 
 function createOrder(userId) {
-    fetch(`http://localhost:8080/orders`, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ userId: userId })
+    fetch(`http://localhost:8080/orders/${userId}`, {
+        method: 'POST'
     })
     .then(response => {
         if (response.ok) {
             alert("Заказ успешно создан!");
-            // Очистить корзину после успешного заказа
-            loadBasketItems(userId);
+            const basketId = localStorage.getItem("basketId");
+            loadBasketItems(basketId);
             document.getElementById("basket-modal").style.display = "none"; // Закрываем модальное окно корзины
         } else {
             throw new Error("Ошибка при создании заказа");

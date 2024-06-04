@@ -1,7 +1,6 @@
 package com.example.SmartStore.controller;
 
 import com.example.SmartStore.model.Basket;
-import com.example.SmartStore.model.BasketDevice;
 import com.example.SmartStore.model.BasketItem;
 import com.example.SmartStore.service.BasketService;
 import com.example.SmartStore.repository.BasketItemRepository;

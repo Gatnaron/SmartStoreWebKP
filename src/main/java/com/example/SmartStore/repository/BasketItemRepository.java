@@ -12,4 +12,5 @@ import java.util.List;
 public interface BasketItemRepository extends JpaRepository<BasketItem, Long>{
     List<BasketItem> findByBasket(Basket basket);
     BasketItem findByBasketAndDevice(Basket basket, Device device);
+    List<BasketItem> findByBasket_User_Id(Long userId);
 }

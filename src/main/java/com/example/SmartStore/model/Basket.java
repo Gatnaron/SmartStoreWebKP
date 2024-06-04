@@ -18,9 +18,6 @@ public class Basket {
     @OneToMany(mappedBy = "basket", cascade = CascadeType.ALL)
     private List<BasketItem> items;
 
-    @OneToMany(mappedBy = "basket")
-    private List<BasketDevice> basketDevices;
-
     public Long getId() {
         return id;
     }
@@ -49,14 +46,6 @@ public class Basket {
 
     public Basket(Long id) {
         this.id = id;
-    }
-
-    public List<BasketDevice> getBasketDevices() {
-        return basketDevices;
-    }
-
-    public void setBasketDevices(List<BasketDevice> basketDevices) {
-        this.basketDevices = basketDevices;
     }
 }
 

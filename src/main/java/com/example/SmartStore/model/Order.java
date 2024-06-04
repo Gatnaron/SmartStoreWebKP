@@ -1,25 +1,28 @@
 package com.example.SmartStore.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
-import java.util.List;
+import java.time.LocalDateTime;
 
 @Entity
+@Table(name = "orders")
 public class Order {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "user_id")
+    @JoinColumn(name = "user_id", nullable = false)
+    @JsonIgnore
     private User user;
 
-    @ManyToMany
-    @JoinTable(
-            name = "order_devices",
-            joinColumns = @JoinColumn(name = "order_id"),
-            inverseJoinColumns = @JoinColumn(name = "device_id"))
-    private List<Device> devices;
+    @Column(name = "total_amount", nullable = false)
+    private double totalAmount;
+
+    @Column(name = "date_time", nullable = false)
+    private LocalDateTime dateTime;
 
     public Long getId() {
         return id;
@@ -37,11 +40,19 @@ public class Order {
         this.user = user;
     }
 
-    public List<Device> getDevices() {
-        return devices;
+    public double getTotalAmount() {
+        return totalAmount;
     }
 
-    public void setDevices(List<Device> devices) {
-        this.devices = devices;
+    public void setTotalAmount(double totalAmount) {
+        this.totalAmount = totalAmount;
+    }
+
+    public LocalDateTime getDateTime() {
+        return dateTime;
+    }
+
+    public void setDateTime(LocalDateTime dateTime) {
+        this.dateTime = dateTime;
     }
 }

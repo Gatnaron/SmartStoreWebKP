@@ -56,11 +56,6 @@ public class BasketService {
         basketItemRepository.deleteById(itemId);
     }
 
-    public List<BasketDevice> getBasketDevicesByUserId(Long userId) {
-        Basket basket = getBasketByUserId(userId);
-        return basket.getBasketDevices();
-    }
-
     public void buyAll(Long userId) {
         Basket basket = getBasketByUserId(userId);
         if (basket != null) {
