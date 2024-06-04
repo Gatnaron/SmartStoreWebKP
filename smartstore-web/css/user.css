@@ -44,27 +44,39 @@
     background-color: #7b387e;
 }
 
+#view-mode {
+    display: flex;
+    flex-direction: column;
+}
+
 #edit-mode {
     display: none;
 }
 
-#orders {
-    margin-top: 20px;
+.order-list {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    justify-content: center;
 }
 
 .order-card {
-    background-color: white;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    padding: 15px;
-    margin-bottom: 10px;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-}
-
-.order-card h3 {
-    margin: 0 0 10px;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    padding: 16px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
 .order-card p {
-    margin: 5px 0;
+    margin: 0;
+    font-size: 16px;
+}
+
+.order-card h3 {
+    margin: 0;
+    font-size: 18px;
 }

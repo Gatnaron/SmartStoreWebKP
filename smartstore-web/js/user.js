@@ -57,7 +57,7 @@ function loadUserProfile(userId) {
 }
 
 function loadUserOrders(userId) {
-    fetch(`http://localhost:8080/orders/${userId}`)
+    fetch(`http://localhost:8080/orders/user/${userId}`)
     .then(response => response.json())
     .then(orders => {
         const ordersContainer = document.getElementById("orders");
@@ -67,14 +67,11 @@ function loadUserOrders(userId) {
         } else {
             orders.forEach(order => {
                 const orderElement = document.createElement("div");
-                orderElement.classList.add("order");
+                orderElement.classList.add("order-card");
                 orderElement.innerHTML = `
                     <h3>Заказ #${order.id}</h3>
-                    <p>Дата: ${new Date(order.createdAt).toLocaleString()}</p>
-                    <p>Товары:</p>
-                    <ul>
-                        ${order.devices.map(device => `<li>${device.name} - ${device.price} руб.</li>`).join('')}
-                    </ul>
+                    <p>Дата: ${new Date(order.dateTime).toLocaleString()}</p>
+                    <p>Сумма: ${order.totalAmount} руб.</p>
                 `;
                 ordersContainer.appendChild(orderElement);
             });
@@ -82,7 +79,7 @@ function loadUserOrders(userId) {
     })
     .catch(error => {
         console.error("Error loading orders:", error);
-        alert("Failed to load orders. Please try again.");
+        alert("Не удалось загрузить заказы. Пожалуйста, попробуйте позже.");
     });
 }
 

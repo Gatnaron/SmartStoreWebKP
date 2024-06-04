@@ -22,6 +22,10 @@ public class OrderService {
     @Autowired
     private UserRepository userRepository;
 
+    public List<Order> getOrdersByUserId(Long userId) {
+        return orderRepository.findByUserId(userId);
+    }
+
     public Order createOrder(Long userId) {
         User user = userRepository.findById(userId).orElseThrow(() -> new RuntimeException("User not found"));
         List<BasketItem> basketItems = basketItemRepository.findByBasket_User_Id(userId);
