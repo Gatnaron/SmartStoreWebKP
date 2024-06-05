@@ -1,164 +1,276 @@
-// admin.js
 document.addEventListener("DOMContentLoaded", function() {
     loadBrands();
     loadTypes();
     loadProducts();
-    loadExistingBrands();
-    loadExistingTypes();
 
-    document.getElementById("add-product-form").onsubmit = function(event) {
-        event.preventDefault();
-        addProduct();
-    };
-
-    document.getElementById("add-brand-form").onsubmit = function(event) {
-        event.preventDefault();
-        addBrand();
-    };
-
-    document.getElementById("add-type-form").onsubmit = function(event) {
-        event.preventDefault();
-        addType();
-    };
+    document.getElementById("add-product-form").addEventListener("submit", addProduct);
+    document.getElementById("add-brand-form").addEventListener("submit", addBrand);
+    document.getElementById("add-type-form").addEventListener("submit", addType);
 });
 
 function loadBrands() {
-    // Пример запроса для загрузки брендов с сервера
-    // Замените на реальный запрос к серверу
-    const brands = [
-        { id: 1, name: "Apple" },
-        { id: 2, name: "Samsung" }
-    ];
+    fetch("http://localhost:8080/brands")
+        .then(response => response.json())
+        .then(brands => {
+            const brandSelect = document.getElementById("product-brand");
+            brandSelect.innerHTML = "";
+            brands.forEach(brand => {
+                if (brand && brand.name) {
+                    const option = document.createElement("option");
+                    option.value = brand.id;
+                    option.textContent = brand.name;
+                    brandSelect.appendChild(option);
+                }
+            });
 
-    const brandSelect = document.getElementById("product-brand");
-    brands.forEach(brand => {
-        const option = document.createElement("option");
-        option.value = brand.id;
-        option.textContent = brand.name;
-        brandSelect.appendChild(option);
-    });
+            const brandsTableBody = document.getElementById("brands-table").querySelector("tbody");
+            brandsTableBody.innerHTML = "";
+            brands.forEach(brand => {
+                if (brand && brand.name) {
+                    const row = document.createElement("tr");
+                    row.innerHTML = `
+                        <td>${brand.id}</td>
+                        <td>${brand.name}</td>
+                        <td><button onclick="deleteBrand(${brand.id})">Удалить</button></td>
+                    `;
+                    brandsTableBody.appendChild(row);
+                }
+            });
+        })
+        .catch(error => console.error("Error loading brands:", error));
 }
 
 function loadTypes() {
-    // Пример запроса для загрузки типов с сервера
-    // Замените на реальный запрос к серверу
-    const types = [
-        { id: 1, name: "Смартфон" },
-        { id: 2, name: "Планшет" }
-    ];
+    fetch("http://localhost:8080/types")
+        .then(response => response.json())
+        .then(types => {
+            const typeSelect = document.getElementById("product-type");
+            typeSelect.innerHTML = "";
+            types.forEach(type => {
+                if (type && type.name) {
+                    const option = document.createElement("option");
+                    option.value = type.id;
+                    option.textContent = type.name;
+                    typeSelect.appendChild(option);
+                }
+            });
 
-    const typeSelect = document.getElementById("product-type");
-    types.forEach(type => {
-        const option = document.createElement("option");
-        option.value = type.id;
-        option.textContent = type.name;
-        typeSelect.appendChild(option);
-    });
+            const typesTableBody = document.getElementById("types-table").querySelector("tbody");
+            typesTableBody.innerHTML = "";
+            types.forEach(type => {
+                if (type && type.name) {
+                    const row = document.createElement("tr");
+                    row.innerHTML = `
+                        <td>${type.id}</td>
+                        <td>${type.name}</td>
+                        <td><button onclick="deleteType(${type.id})">Удалить</button></td>
+                    `;
+                    typesTableBody.appendChild(row);
+                }
+            });
+        })
+        .catch(error => console.error("Error loading types:", error));
 }
 
 function loadProducts() {
-    // Пример запроса для загрузки товаров с сервера
-    // Замените на реальный запрос к серверу
-    const products = [
-        { img: "img/product1.jpg", name: "iPhone 12", price: 799.99, brand: "Apple", type: "Смартфон", info: "Описание продукта 1" },
-        { img: "img/product2.jpg", name: "Galaxy Tab S7", price: 649.99, brand: "Samsung", type: "Планшет", info: "Описание продукта 2" }
-    ];
-
-    const productsTableBody = document.getElementById("products-table").getElementsByTagName("tbody")[0];
-    products.forEach(product => {
-        const row = productsTableBody.insertRow();
-        row.insertCell(0).textContent = product.img;
-        row.insertCell(1).textContent = product.name;
-        row.insertCell(2).textContent = product.price;
-        row.insertCell(3).textContent = product.brand;
-        row.insertCell(4).textContent = product.type;
-        row.insertCell(5).textContent = product.info;
-    });
+    fetch("http://localhost:8080/devices/all")
+        .then(response => response.json())
+        .then(products => {
+            const productsTableBody = document.getElementById("products-table").querySelector("tbody");
+            productsTableBody.innerHTML = "";
+            products.forEach(product => {
+                if (product && product.name) {
+                    const row = document.createElement("tr");
+                    row.innerHTML = `
+                        <td><img src="${product.img}" alt="${product.name}" width="50"></td>
+                        <td>${product.name}</td>
+                        <td>${product.price}</td>
+                        <td>${product.brand.name}</td>
+                        <td>${product.type.name}</td>
+                        <td>
+                            <button onclick="editProduct(${product.id})">Редактировать</button>
+                            <button onclick="deleteProduct(${product.id})">Удалить</button>
+                        </td>
+                    `;
+                    productsTableBody.appendChild(row);
+                }
+            });
+        })
+        .catch(error => console.error("Error loading products:", error));
 }
 
-function loadExistingBrands() {
-    // Пример запроса для загрузки брендов с сервера
-    // Замените на реальный запрос к серверу
-    const brands = [
-        { id: 1, name: "Apple" },
-        { id: 2, name: "Samsung" }
-    ];
+function addProduct(event) {
+    event.preventDefault();
 
-    const brandsTableBody = document.getElementById("brands-table").getElementsByTagName("tbody")[0];
-    brands.forEach(brand => {
-        const row = brandsTableBody.insertRow();
-        row.insertCell(0).textContent = brand.id;
-        row.insertCell(1).textContent = brand.name;
-    });
-}
-
-function loadExistingTypes() {
-    // Пример запроса для загрузки типов с сервера
-    // Замените на реальный запрос к серверу
-    const types = [
-        { id: 1, name: "Смартфон" },
-        { id: 2, name: "Планшет" }
-    ];
-
-    const typesTableBody = document.getElementById("types-table").getElementsByTagName("tbody")[0];
-    types.forEach(type => {
-        const row = typesTableBody.insertRow();
-        row.insertCell(0).textContent = type.id;
-        row.insertCell(1).textContent = type.name;
-    });
-}
-
-function addProduct() {
     const img = document.getElementById("product-img").value;
     const name = document.getElementById("product-name").value;
-    const price = document.getElementById("product-price").value;
-    const brand = document.getElementById("product-brand").value;
-    const type = document.getElementById("product-type").value;
-    const infoTitle = document.getElementById("product-info-title").value;
-    const infoDescription = document.getElementById("product-info-description").value;
+    const price = parseFloat(document.getElementById("product-price").value);
+    const brandId = parseInt(document.getElementById("product-brand").value);
+    const typeId = parseInt(document.getElementById("product-type").value);
 
-    // Пример отправки данных на сервер
-    // Замените на реальный запрос к серверу
-    console.log({
-        img,
-        name,
-        price,
-        brand,
-        type,
-        infoTitle,
-        infoDescription
-    });
-
-    alert("Товар добавлен!");
-    // Очистка формы
-    document.getElementById("add-product-form").reset();
-    loadProducts(); // Перезагрузка таблицы товаров
+    fetch("http://localhost:8080/devices", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+            img: img,
+            name: name,
+            price: price,
+            brandId: brandId,
+            typeId: typeId
+        })
+    })
+    .then(response => response.json())
+    .then(product => {
+        console.log("Product added:", product);
+        loadProducts(); // Обновляем список продуктов после добавления нового
+    })
+    .catch(error => console.error("Error adding product:", error));
 }
 
-function addBrand() {
+function addBrand(event) {
+    event.preventDefault();
+
     const name = document.getElementById("brand-name").value;
 
-    // Пример отправки данных на сервер
-    // Замените на реальный запрос к серверу
-    console.log({ name });
-
-    alert("Бренд добавлен!");
-    // Очистка формы
-    document.getElementById("add-brand-form").reset();
-    loadBrands(); // Перезагрузка списка брендов
-    loadExistingBrands(); // Перезагрузка таблицы брендов
+    fetch("http://localhost:8080/brands", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+            name: name
+        })
+    })
+    .then(response => response.json())
+    .then(brand => {
+        console.log("Brand added:", brand);
+        loadBrands(); // Обновляем список брендов после добавления нового
+    })
+    .catch(error => console.error("Error adding brand:", error));
 }
 
-function addType() {
+function addType(event) {
+    event.preventDefault();
+
     const name = document.getElementById("type-name").value;
 
-    // Пример отправки данных на сервер
-    // Замените на реальный запрос к серверу
-    console.log({ name });
-
-    alert("Тип добавлен!");
-    // Очистка формы
-    document.getElementById("add-type-form").reset();
-    loadTypes(); // Перезагрузка списка типов
-    loadExistingTypes(); // Перезагрузка таблицы типов
+    fetch("http://localhost:8080/types", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+            name: name
+        })
+    })
+    .then(response => response.json())
+    .then(type => {
+        console.log("Type added:", type);
+        loadTypes(); // Обновляем список типов после добавления нового
+    })
+    .catch(error => console.error("Error adding type:", error));
 }
+
+function deleteProduct(productId) {
+    fetch(`http://localhost:8080/devices/${productId}`, {
+        method: "DELETE"
+    })
+    .then(() => {
+        console.log("Product deleted:", productId);
+        loadProducts(); // Обновляем список продуктов после удаления
+    })
+    .catch(error => console.error("Error deleting product:", error));
+}
+
+function deleteBrand(brandId) {
+    fetch(`http://localhost:8080/brands/${brandId}`, {
+        method: "DELETE"
+    })
+    .then(() => {
+        console.log("Brand deleted:", brandId);
+        loadBrands(); // Обновляем список брендов после удаления
+    })
+    .catch(error => console.error("Error deleting brand:", error));
+}
+
+function deleteType(typeId) {
+    fetch(`http://localhost:8080/types/${typeId}`, {
+        method: "DELETE"
+    })
+    .then(() => {
+        console.log("Type deleted:", typeId);
+        loadTypes(); // Обновляем список типов после удаления
+    })
+    .catch(error => console.error("Error deleting type:", error));
+}
+
+function editProduct(productId) {
+    const newName = prompt("Введите новое название товара:");
+    const newPrice = prompt("Введите новую цену товара:");
+
+    if (newName !== null && newPrice !== null) {
+        fetch(`http://localhost:8080/devices/${productId}`, {
+            method: "PUT",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                name: newName,
+                price: parseFloat(newPrice)
+            })
+        })
+        .then(response => response.json())
+        .then(product => {
+            console.log("Product edited:", product);
+            loadProducts(); // Обновляем список продуктов после редактирования
+        })
+        .catch(error => console.error("Error editing product:", error));
+    }
+}
+
+function editBrand(brandId) {
+    const newName = prompt("Введите новое название бренда:");
+
+    if (newName !== null) {
+        fetch(`http://localhost:8080/brands/${brandId}`, {
+            method: "PUT",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                name: newName
+            })
+        })
+        .then(response => response.json())
+        .then(brand => {
+            console.log("Brand edited:", brand);
+            loadBrands(); // Обновляем список брендов после редактирования
+        })
+        .catch(error => console.error("Error editing brand:", error));
+    }
+}
+
+function editType(typeId) {
+    const newName = prompt("Введите новое название типа:");
+
+    if (newName !== null) {
+        fetch(`http://localhost:8080/types/${typeId}`, {
+            method: "PUT",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                name: newName
+            })
+        })
+        .then(response => response.json())
+        .then(type => {
+            console.log("Type edited:", type);
+            loadTypes(); // Обновляем список типов после редактирования
+        })
+        .catch(error => console.error("Error editing type:", error));
+    }
+}
+

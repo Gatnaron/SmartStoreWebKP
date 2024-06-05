@@ -12,6 +12,7 @@
         <a href="admin.html" class="logo">Админ Панель-SmartStore</a>
         <nav>
             <a href="catalog.html">Каталог</a>
+        </nav>
     </header>
     <main>
         <h1>Админ Панель</h1>
@@ -37,12 +38,6 @@
                 <select id="product-type" name="type" required>
                     <!-- Опции будут загружаться динамически -->
                 </select>
-
-                <label for="product-info-title">Заголовок доп. информации:</label>
-                <input type="text" id="product-info-title" name="info-title" required>
-
-                <label for="product-info-description">Описание доп. информации:</label>
-                <textarea id="product-info-description" name="info-description" required></textarea>
 
                 <button type="submit">Добавить товар</button>
             </form>
@@ -76,7 +71,7 @@
                         <th>Цена</th>
                         <th>Бренд</th>
                         <th>Тип</th>
-                        <th>Доп. информация</th>
+                        <th>Действия</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -84,7 +79,7 @@
                 </tbody>
             </table>
         </section>
-
+        
         <section class="admin-section">
             <h2>Существующие бренды</h2>
             <table id="brands-table">
@@ -92,6 +87,7 @@
                     <tr>
                         <th>ID</th>
                         <th>Название</th>
+                        <th>Действия</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -99,7 +95,7 @@
                 </tbody>
             </table>
         </section>
-
+        
         <section class="admin-section">
             <h2>Существующие типы</h2>
             <table id="types-table">
@@ -107,6 +103,7 @@
                     <tr>
                         <th>ID</th>
                         <th>Название</th>
+                        <th>Действия</th>
                     </tr>
                 </thead>
                 <tbody>
