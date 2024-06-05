@@ -29,9 +29,10 @@ public class DeviceController {
         return deviceRepository.findAll();
     }
 
-    @PostMapping
-    public Device createDevice(@RequestBody Device device) {
-        return deviceRepository.save(device);
+    @PostMapping("/add")
+    public ResponseEntity<Device> addDevice(@RequestBody Device device) {
+        Device savedDevice = deviceService.save(device);
+        return ResponseEntity.ok(savedDevice);
     }
 
     @GetMapping("/all")
@@ -39,20 +40,19 @@ public class DeviceController {
         return deviceService.getAllDevices();
     }
 
-
     @GetMapping("/{id}")
-    public Device getDeviceById(@PathVariable Long id) {
-        return deviceService.getDeviceById(id);
+    public Device findById(@PathVariable Long id) {
+        return deviceService.findById(id);
     }
 
+//    @GetMapping("/{id}")
+//    public Device getDeviceById(@PathVariable Long id) {
+//        return deviceService.getDeviceById(id);
+//    }
+
     @PutMapping("/{id}")
-    public ResponseEntity<Device> updateDevice(@PathVariable Long id, @RequestBody Device deviceDetails) {
-        Device device = deviceRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Device not found for this id :: " + id));
-        device.setName(deviceDetails.getName());
-        // Add other fields to update
-        final Device updatedDevice = deviceRepository.save(device);
-        return ResponseEntity.ok(updatedDevice);
+    public Device updateDevice(@PathVariable Long id, @RequestBody Device device) {
+        return deviceService.update(id, device);
     }
 
     @DeleteMapping("/{id}")

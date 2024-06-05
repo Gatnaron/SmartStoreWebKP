@@ -111,8 +111,40 @@
                 </tbody>
             </table>
         </section>
-    </main>
+        <!-- Модальное окно для редактирования товара -->
+        <div id="edit-product-modal" class="modal">
+            <div class="modal-content">
+                <span id="close-edit-modal" class="close">&times;</span>
+                <h2>Редактировать товар</h2>
+                <form id="edit-product-form">
+                    <input type="hidden" id="edit-product-id">
+                    
+                    <label for="edit-product-img">Изображение товара:</label>
+                    <input type="text" id="edit-product-img" name="img" required>
 
+                    <label for="edit-product-name">Название товара:</label>
+                    <input type="text" id="edit-product-name" name="name" required>
+
+                    <label for="edit-product-price">Цена:</label>
+                    <input type="number" id="edit-product-price" name="price" step="0.01" required>
+
+                    <label for="edit-product-brand">Бренд:</label>
+                    <select id="edit-product-brand" name="brand" required>
+                        <!-- Опции будут загружаться динамически -->
+                    </select>
+
+                    <label for="edit-product-type">Тип:</label>
+                    <select id="edit-product-type" name="type" required>
+                        <!-- Опции будут загружаться динамически -->
+                    </select>
+
+                    <button type="submit">Сохранить изменения</button>
+                </form>
+            </div>
+        </div>
     <script src="js/admin.js"></script>
+    <script src="js/modalAdmin.js"></script>
+    </main>
+    
 </body>
 </html>

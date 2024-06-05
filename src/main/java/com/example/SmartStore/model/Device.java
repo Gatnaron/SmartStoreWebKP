@@ -18,8 +18,6 @@ public class Device {
 
     private String img;
 
-    private String description; // новое поле
-
     @ManyToOne
     @JoinColumn(name = "id_type", referencedColumnName = "id")
     private Type type;
@@ -69,13 +67,6 @@ public class Device {
         this.img = img;
     }
 
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
 
     public Type getType() {
         return type;

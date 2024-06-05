@@ -99,35 +99,54 @@ function loadProducts() {
         .catch(error => console.error("Error loading products:", error));
 }
 
-function addProduct(event) {
-    event.preventDefault();
+document.getElementById('add-product-form').addEventListener('submit', async (e) => {
+    e.preventDefault();
 
-    const img = document.getElementById("product-img").value;
-    const name = document.getElementById("product-name").value;
-    const price = parseFloat(document.getElementById("product-price").value);
-    const brandId = parseInt(document.getElementById("product-brand").value);
-    const typeId = parseInt(document.getElementById("product-type").value);
+    const name = document.getElementById('product-name').value;
+    const price = parseFloat(document.getElementById('product-price').value);
+    const img = document.getElementById('product-img').value;
+    const typeId = parseInt(document.getElementById('product-type').value);
+    const brandId = parseInt(document.getElementById('product-brand').value);
 
-    fetch("http://localhost:8080/devices", {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify({
-            img: img,
-            name: name,
-            price: price,
-            brandId: brandId,
-            typeId: typeId
-        })
-    })
-    .then(response => response.json())
-    .then(product => {
-        console.log("Product added:", product);
-        loadProducts(); // Обновляем список продуктов после добавления нового
-    })
-    .catch(error => console.error("Error adding product:", error));
-}
+    const type = {
+        id: typeId,
+        name: document.getElementById('product-type').selectedOptions[0].text
+    };
+
+    const brand = {
+        id: brandId,
+        name: document.getElementById('product-brand').selectedOptions[0].text
+    };
+
+    const product = {
+        name,
+        price,
+        img,
+        type,
+        brand
+    };
+
+    try {
+        const response = await fetch('http://localhost:8080/devices/add', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(product)
+        });
+
+        if (response.ok) {
+            alert('Товар успешно добавлен!');
+            document.getElementById('add-product-form').reset();
+            loadProducts(); // Обновить список товаров
+        } else {
+            alert('Ошибка при добавлении товара.');
+        }
+    } catch (error) {
+        console.error('Error adding product:', error);
+        alert('Ошибка при добавлении товара.');
+    }
+});
 
 function addBrand(event) {
     event.preventDefault();
@@ -206,30 +225,6 @@ function deleteType(typeId) {
     .catch(error => console.error("Error deleting type:", error));
 }
 
-function editProduct(productId) {
-    const newName = prompt("Введите новое название товара:");
-    const newPrice = prompt("Введите новую цену товара:");
-
-    if (newName !== null && newPrice !== null) {
-        fetch(`http://localhost:8080/devices/${productId}`, {
-            method: "PUT",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify({
-                name: newName,
-                price: parseFloat(newPrice)
-            })
-        })
-        .then(response => response.json())
-        .then(product => {
-            console.log("Product edited:", product);
-            loadProducts(); // Обновляем список продуктов после редактирования
-        })
-        .catch(error => console.error("Error editing product:", error));
-    }
-}
-
 function editBrand(brandId) {
     const newName = prompt("Введите новое название бренда:");
 
@@ -274,3 +269,44 @@ function editType(typeId) {
     }
 }
 
+// Функция для редактирования товара
+async function editProduct(id) {
+    try {
+        const response = await fetch(`http://localhost:8080/devices/${id}`);
+        const product = await response.json();
+        openEditModal(product); // Открытие модального окна с данными товара
+    } catch (error) {
+        console.error('Error fetching product data:', error);
+        alert('Ошибка при получении данных товара.');
+    }
+}
+
+// Подгрузка опций для бренда и типа в модальное окно редактирования
+async function loadSelectOptions() {
+    try {
+        const [brandsResponse, typesResponse] = await Promise.all([
+            fetch('http://localhost:8080/brands'),
+            fetch('http://localhost:8080/types')
+        ]);
+
+        const [brands, types] = await Promise.all([
+            brandsResponse.json(),
+            typesResponse.json()
+        ]);
+
+        const brandSelect = document.getElementById('edit-product-brand');
+        const typeSelect = document.getElementById('edit-product-type');
+
+        brandSelect.innerHTML = brands.map(brand => `<option value="${brand.id}">${brand.name}</option>`).join('');
+        typeSelect.innerHTML = types.map(type => `<option value="${type.id}">${type.name}</option>`).join('');
+
+    } catch (error) {
+        console.error('Error loading select options:', error);
+    }
+}
+
+// Загружаем опции для модального окна при загрузке страницы
+window.onload = () => {
+    loadProducts();
+    loadSelectOptions();
+};
