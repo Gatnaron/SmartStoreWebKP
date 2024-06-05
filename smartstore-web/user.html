@@ -25,6 +25,7 @@
                 <p>Адрес: <span id="address"></span></p>
                 <h2>Ваши заказы</h2>
                 <div id="orders" class="order-list">
+                    <!-- Заказы будут отображаться здесь -->
                 </div>
             </div>
             <form id="edit-mode">
@@ -36,6 +37,13 @@
             </form>
         </section>
     </main>
+    <div id="qr-modal" class="modal">
+        <div class="modal-content">
+            <span id="close-qr-modal" class="close">&times;</span>
+            <div id="qrcode"></div>
+        </div>
+    </div>
+    <script src="js/qrcode.min.js"></script>
     <script src="js/user.js"></script> 
 </body>
 </html>

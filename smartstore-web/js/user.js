@@ -35,6 +35,20 @@ document.addEventListener("DOMContentLoaded", function() {
             updateUserProfile(userId, password, address);
         });
     }
+
+    // Close QR modal
+    const qrModal = document.getElementById("qr-modal");
+    const closeQrModalButton = document.getElementById("close-qr-modal");
+
+    closeQrModalButton.addEventListener("click", function() {
+        qrModal.style.display = "none";
+    });
+
+    window.addEventListener("click", function(event) {
+        if (event.target === qrModal) {
+            qrModal.style.display = "none";
+        }
+    });
 });
 
 function loadUserProfile(userId) {
@@ -72,8 +86,18 @@ function loadUserOrders(userId) {
                     <h3>Заказ #${order.id}</h3>
                     <p>Дата: ${new Date(order.dateTime).toLocaleString()}</p>
                     <p>Сумма: ${order.totalAmount} руб.</p>
+                    <button class="qr-button" data-order-id="${order.id}"></button>
                 `;
                 ordersContainer.appendChild(orderElement);
+            });
+
+            // Add event listeners for QR buttons
+            const qrButtons = document.querySelectorAll(".qr-button");
+            qrButtons.forEach(button => {
+                button.addEventListener("click", function() {
+                    const orderId = button.getAttribute("data-order-id");
+                    generateQRCode(userId, orderId);
+                });
             });
         }
     })
@@ -81,6 +105,24 @@ function loadUserOrders(userId) {
         console.error("Error loading orders:", error);
         alert("Не удалось загрузить заказы. Пожалуйста, попробуйте позже.");
     });
+}
+
+function generateQRCode(userId, orderId) {
+    const qrModal = document.getElementById("qr-modal");
+    const qrCodeContainer = document.getElementById("qrcode");
+
+    // Clear any existing QR code
+    qrCodeContainer.innerHTML = "";
+
+    // Generate new QR code
+    const qrCode = new QRCode(qrCodeContainer, {
+        text: `user_id:${userId}, order_id:${orderId}`,
+        width: 256,
+        height: 256,
+    });
+
+    // Display the modal
+    qrModal.style.display = "block";
 }
 
 function updateUserProfile(userId, password, address) {
@@ -101,6 +143,6 @@ function updateUserProfile(userId, password, address) {
     })
     .catch(error => {
         console.error("Error updating profile:", error);
-        alert("Failed to update profile. Please try again.");
+        alert("Не удалось обновить профиль. Пожалуйста, попробуйте позже.");
     });
 }
