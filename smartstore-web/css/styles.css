@@ -148,3 +148,45 @@ aside.sidebar {
     box-sizing: border-box;
 }
 
+#smart-home {
+    padding: 50px 0;
+    text-align: center;
+    color: #9b4da6;
+}
+
+#smart-home h2 {
+    font-size: 2.5em;
+    margin-bottom: 20px;
+}
+
+.features {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+}
+
+.feature-item {
+    max-width: 30%;
+    margin-bottom: 20px;
+    padding: 20px;
+    background-color: #fff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+}
+
+.feature-item img {
+    width: 70%; /* Измените размер в соответствии с вашими потребностями */
+    height: auto;
+    margin-bottom: 15px;
+    border-radius: 10px;
+}
+
+.feature-item h3 {
+    font-size: 1.5em;
+    margin-bottom: 10px;
+}
+
+.feature-item p {
+    font-size: 1em;
+    color: #666;
+}
