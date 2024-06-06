@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="css/modal.css">
     <link rel="stylesheet" href="css/styles.css">
     <link rel="stylesheet" href="css/basket.css">
+    <link rel="stylesheet" href="css/footer.css">
 </head>
 <body>
     <header>
@@ -36,7 +37,7 @@
     </main>
     <div id="modal" class="modal" style="display:none;">
         <div class="modal-content">
-            <span id="close-modal-auth">&times;</span> <!-- Уникальный ID -->
+            <span id="close-modal-auth">&times;</span>
             <div id="auth-container">
                 <h2>Авторизация</h2>
                 <form id="auth-form">
@@ -47,7 +48,7 @@
                 </form>
             </div>
             <div id="register-container" style="display: none;">
-                <span id="close-modal-register">&times;</span> <!-- Уникальный ID -->
+                
                 <h2>Регистрация</h2>
                 <form id="register-form">
                     <input type="email" id="register-email" placeholder="Email" required>
@@ -59,8 +60,32 @@
             </div>
         </div>
     </div>
-    
+    <div class="hover-zone"></div>
+    <footer>
+        <div class="footer-container">
+            <div class="footer-item">
+                <h3>Создан <span>ОГАНЯН И.А.</span></h3>
+                <p>Студент группы бОИС-211, ФИТКБ, Кафедра систем управления и информационных технологий в строительстве</p>
+            </div>
+            <div class="footer-item">
+                <img src="img/mail.png" alt="Mail Icon">
+                <h4>MAIL</h4>
+                <p>oganyan.ivan2016@yandex.ru</p>
+            </div>
+            <div class="footer-item">
+                <img src="img/telegram.png" alt="Telegram Icon">
+                <h4>TELEGRAM</h4>
+                <p>+7 906 676 4203 @Gatnizig</p>
+            </div>
+            <div class="footer-item">
+                <img src="img/github.png" alt="GitHub Icon">
+                <h4>GIT HUB</h4>
+                <p>https://github.com/Gatnaron</p>
+            </div>
+        </div>
+    </footer>
     <script src="js/scripts.js"></script>
     <script src="js/modal.js"></script>
+    <script src="js/footerAnimation.js"></script>
 </body>
 </html>

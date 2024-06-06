@@ -2,8 +2,7 @@ document.addEventListener("DOMContentLoaded", function() {
     loadBrands();
     loadTypes();
     loadProducts();
-
-    document.getElementById("add-product-form").addEventListener("submit", addProduct);
+    
     document.getElementById("add-brand-form").addEventListener("submit", addBrand);
     document.getElementById("add-type-form").addEventListener("submit", addType);
 });
@@ -187,7 +186,7 @@ function addType(event) {
     .then(response => response.json())
     .then(type => {
         console.log("Type added:", type);
-        loadTypes(); // Обновляем список типов после добавления нового
+        loadTypes();
     })
     .catch(error => console.error("Error adding type:", error));
 }
@@ -223,50 +222,6 @@ function deleteType(typeId) {
         loadTypes(); // Обновляем список типов после удаления
     })
     .catch(error => console.error("Error deleting type:", error));
-}
-
-function editBrand(brandId) {
-    const newName = prompt("Введите новое название бренда:");
-
-    if (newName !== null) {
-        fetch(`http://localhost:8080/brands/${brandId}`, {
-            method: "PUT",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify({
-                name: newName
-            })
-        })
-        .then(response => response.json())
-        .then(brand => {
-            console.log("Brand edited:", brand);
-            loadBrands(); // Обновляем список брендов после редактирования
-        })
-        .catch(error => console.error("Error editing brand:", error));
-    }
-}
-
-function editType(typeId) {
-    const newName = prompt("Введите новое название типа:");
-
-    if (newName !== null) {
-        fetch(`http://localhost:8080/types/${typeId}`, {
-            method: "PUT",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify({
-                name: newName
-            })
-        })
-        .then(response => response.json())
-        .then(type => {
-            console.log("Type edited:", type);
-            loadTypes(); // Обновляем список типов после редактирования
-        })
-        .catch(error => console.error("Error editing type:", error));
-    }
 }
 
 // Функция для редактирования товара

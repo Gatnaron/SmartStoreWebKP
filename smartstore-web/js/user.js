@@ -126,23 +126,38 @@ function generateQRCode(userId, orderId) {
 }
 
 function updateUserProfile(userId, password, address) {
-    fetch(`http://localhost:8080/users/${userId}`, {
-        method: "PUT",
-        headers: {
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify({ password, address })
-    })
-    .then(response => {
-        if (response.ok) {
-            alert("Profile updated successfully.");
-            window.location.reload();
-        } else {
-            throw new Error("Failed to update profile");
-        }
-    })
-    .catch(error => {
-        console.error("Error updating profile:", error);
-        alert("Не удалось обновить профиль. Пожалуйста, попробуйте позже.");
-    });
+    // Получаем текущего пользователя с сервера для получения всех полей
+    fetch(`http://localhost:8080/users/${userId}`)
+        .then(response => {
+            if (!response.ok) {
+                throw new Error("Failed to fetch user data");
+            }
+            return response.json();
+        })
+        .then(user => {
+            // Обновляем только поля password и address
+            user.password = password;
+            user.address = address;
+
+            // Отправляем обновленные данные на сервер
+            return fetch(`http://localhost:8080/users/${userId}`, {
+                method: "PUT",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(user)
+            });
+        })
+        .then(response => {
+            if (response.ok) {
+                alert("Profile updated successfully.");
+                window.location.reload();
+            } else {
+                throw new Error("Failed to update profile");
+            }
+        })
+        .catch(error => {
+            console.error("Error updating profile:", error);
+            alert("Не удалось обновить профиль. Пожалуйста, попробуйте позже.");
+        });
 }

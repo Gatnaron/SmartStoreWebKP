@@ -1,3 +1,4 @@
+/* Стили для страницы пользователя */
 .user-info {
     max-width: 600px;
     margin: 0 auto;
@@ -88,6 +89,14 @@
     height: 32px;
     border: none;
     cursor: pointer;
+}
+
+/* Изменение изображения при наведении */
+.order-card .qr-button:hover {
+    background: url('/img/scanHover.png') no-repeat center center;
+    background-size: contain;
+    background-color: #9b4da6;
+    transition: background-color 0.3s ease;
 }
 
 .modal {

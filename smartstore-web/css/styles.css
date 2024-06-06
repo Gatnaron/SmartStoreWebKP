@@ -1,6 +1,12 @@
 body {
     margin: 0;
     font-family: Arial, sans-serif;
+    display: flex;
+    flex-direction: column;
+}
+
+html, body {
+    height: 100%;
 }
 
 header {
@@ -36,6 +42,7 @@ header nav img {
 
 main {
     padding: 80px 20px 20px 20px;
+    flex: 1;
 }
 
 .slideshow {

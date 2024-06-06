@@ -81,10 +81,12 @@ function loadBasketItems(basketId) {
                         const itemElement = document.createElement("div");
                         itemElement.classList.add("basket-item");
                         itemElement.innerHTML = `
-                            <img src="${item.device.img}" alt="${item.device.name}">
-                            <span>${item.device.name}</span>
-                            <span>${item.device.price} руб.</span>
-                            <span>Количество: ${item.quantity}</span>
+                            <div>
+                                <img src="${item.device.img}" alt="${item.device.name}">
+                                <span>${item.device.name}</span>
+                                <span>${item.device.price} руб.</span>
+                                <span>Количество: ${item.quantity}</span>
+                            </div>
                         `;
                         basketItemsContainer.appendChild(itemElement);
                     } else {
@@ -107,7 +109,7 @@ function createOrder(userId) {
         if (response.ok) {
             alert("Заказ успешно создан!");
             const basketId = localStorage.getItem("basketId");
-            loadBasketItems(basketId);
+            //loadBasketItems(basketId);
             document.getElementById("basket-modal").style.display = "none"; // Закрываем модальное окно корзины
         } else {
             throw new Error("Ошибка при создании заказа");

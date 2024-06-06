@@ -46,16 +46,33 @@
 
 #basket-items .basket-item {
     display: flex;
-    justify-content: space-between;
-    align-items: center;
+    flex-direction: column; /* Изменено на column для вертикального размещения */
+    align-items: flex-start;
     padding: 10px;
     border-bottom: 1px solid #ccc;
 }
 
-#basket-items .basket-item img {
+#basket-items .basket-item div {
+    display: flex;
+    align-items: center;
+    width: 100%;
+}
+
+#basket-items .basket-item div img {
     width: 50px;
     height: 50px;
     object-fit: cover;
+    margin-right: 10px;
+}
+
+#basket-items .basket-item div span {
+    flex: 1;
+    border-left: 1px solid #ccc; /* Вертикальный разделитель */
+    padding-left: 10px;
+}
+
+#basket-items .basket-item div span:first-child {
+    border-left: none; /* Убираем левый border у первого элемента */
 }
 
 #empty-basket-message {
@@ -84,7 +101,7 @@
     cursor: pointer;
     font-size: 18px;
     margin-top: auto;
-    margin-bottom: 20px; /* Поднимаем кнопку над нижней панелью */
+    margin-bottom: 20px; 
 }
 
 #checkout-button:hover {
