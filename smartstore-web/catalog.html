@@ -6,75 +6,55 @@
     <title>Каталог товаров - SmartStore</title>
     <link rel="stylesheet" href="css/catalog.css">
     <link rel="stylesheet" href="css/basket.css">
-    <link rel="stylesheet" href="css/footer.css">
+    <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
-    <header>
-        <a href="index.html" class="logo">SmartStore</a>
-        <nav>
-            <a href="#" id="basket-icon"><img src="img/basket.png" alt="Корзина"></a>
-        </nav>
-    </header>
-    <main>
-        <aside>
-            <h2>Сортировка</h2>
-            <form>
-                <label for="sort-name">Название:</label>
-                <input type="text" id="sort-name" name="name">
-                <label for="sort-type">Тип:</label>
-                <input type="text" id="sort-type" name="type">
-                <label for="sort-brand">Бренд:</label>
-                <input type="text" id="sort-brand" name="brand">
-                <label>Цена:</label>
-                <div class="price-range">
-                    <input type="number" id="sort-price-min" name="price-min" step="any" placeholder="от">
-                    <input type="number" id="sort-price-max" name="price-max" step="any" placeholder="до">
+    <canvas id="myCanvas"></canvas>
+    <div id="content">
+        <header>
+            <a href="index.html" class="logo">SmartStore</a>
+            <nav>
+                <a href="#" id="basket-icon"><img src="img/basket.png" alt="Корзина"></a>
+            </nav>
+        </header>
+        <main>
+            <aside>
+                <h2>Сортировка</h2>
+                <form>
+                    <label for="sort-name">Название:</label>
+                    <input type="text" id="sort-name" name="name">
+                    <label for="sort-type">Тип:</label>
+                    <input type="text" id="sort-type" name="type">
+                    <label for="sort-brand">Бренд:</label>
+                    <input type="text" id="sort-brand" name="brand">
+                    <label>Цена:</label>
+                    <div class="price-range">
+                        <input type="number" id="sort-price-min" name="price-min" step="any" placeholder="от">
+                        <input type="number" id="sort-price-max" name="price-max" step="any" placeholder="до">
+                    </div>
+                    <button type="submit">Применить</button>
+                </form>
+            </aside>
+            <section id="product-list">
+                <h1>Каталог товаров</h1>
+                <div class="product-grid">
+                    <!-- Здесь будут отображаться товары -->
                 </div>
-                <button type="submit">Применить</button>
-            </form>
-        </aside>
-        <section id="product-list">
-            <h1>Каталог товаров</h1>
-            <div class="product-grid">
-                <!-- Здесь будут отображаться товары -->
+            </section>
+        </main>
+        <div id="basket-modal" class="modal">
+            <div class="modal-content">
+                <span id="close-basket-modal" class="close">&times;</span>
+                <h2>Ваша корзина</h2>
+                <div id="basket-items"></div>
+                <p id="empty-basket-message" class="hidden">Ваша корзина пуста.</p>
+                <button id="checkout-button" class="hidden">Оформить заказ</button>
             </div>
-        </section>
-    </main>
-    <div id="basket-modal" class="modal">
-        <div class="modal-content">
-            <span id="close-basket-modal" class="close">&times;</span>
-            <h2>Ваша корзина</h2>
-            <div id="basket-items"></div>
-            <p id="empty-basket-message" class="hidden">Ваша корзина пуста.</p>
-            <button id="checkout-button" class="hidden">Оформить заказ</button>
         </div>
+        
     </div>
-    <div class="hover-zone"></div>
-<footer>
-    <div class="footer-container">
-        <div class="footer-item">
-            <h3>Создан <span>ОГАНЯН И.А.</span></h3>
-            <p>Студент группы бОИС-211, ФИТКБ, Кафедра систем управления и информационных технологий в строительстве</p>
-        </div>
-        <div class="footer-item">
-            <img src="img/mail.png" alt="Mail Icon">
-            <h4>MAIL</h4>
-            <p>oganyan.ivan2016@yandex.ru</p>
-        </div>
-        <div class="footer-item">
-            <img src="img/telegram.png" alt="Telegram Icon">
-            <h4>TELEGRAM</h4>
-            <p>+7 906 676 4203 @Gatnizig</p>
-        </div>
-        <div class="footer-item">
-            <img src="img/github.png" alt="GitHub Icon">
-            <h4>GIT HUB</h4>
-            <p>https://github.com/Gatnaron</p>
-        </div>
-    </div>
-</footer>
     <script src="js/modalBasket.js"></script>
     <script src="js/catalog.js"></script>
-    <script src="js/footerAnimation.js"></script>
+    <script src="js/canvasAnimation.js"></script>
 </body>
 </html>
